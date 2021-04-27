@@ -1,15 +1,21 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# Serverless directories
+.serverless
+package-lock.json
 
-# Test binary, built with `go test -c`
-*.test
+# golang output binary directory
+bin
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+# local creds and stuff
+.env
+aws.env
+*.aes
+config.json
+config.whd.json
+config.google.json
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# dev tools metadata
+.idea/
+node_modules/
+.vscode
+
+lambda-example/go.mod
