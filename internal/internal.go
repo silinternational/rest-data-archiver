@@ -38,8 +38,17 @@ func LoadConfig(configFile string) (AppConfig, error) {
 		return AppConfig{}, err
 	}
 
+	config, err := parseConfig(data)
+	if err != nil {
+		return AppConfig{}, err
+	}
+
+	return config, nil
+}
+
+func parseConfig(data []byte) (AppConfig, error) {
 	config := AppConfig{}
-	err = json.Unmarshal(data, &config)
+	err := json.Unmarshal(data, &config)
 	if err != nil {
 		log.Printf("unable to unmarshal application configuration file data, error: %s\n", err.Error())
 		return config, err
@@ -59,7 +68,6 @@ func LoadConfig(configFile string) (AppConfig, error) {
 	for i, set := range config.Sets {
 		log.Printf("  %v) %s\n", i+1, set.Name)
 	}
-
 	return config, nil
 }
 
