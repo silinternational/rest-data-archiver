@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	DefaultObjectNamePrefix = "data"
+	DefaultObjectNamePrefix = "data_"
 )
 
 type S3Adapter struct {
