@@ -1,0 +1,4 @@
+app:
+  build:
+    image: silinternational/rest-data-archiver
+    dockerfile: Dockerfile
