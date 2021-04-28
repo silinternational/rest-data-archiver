@@ -14,6 +14,8 @@ import (
 	"github.com/silinternational/rest-data-archiver/restapi"
 )
 
+var appConfig internal.AppConfig
+
 func Run(configFile string) error {
 	log.SetOutput(os.Stdout)
 	log.SetFlags(0)
@@ -21,9 +23,7 @@ func Run(configFile string) error {
 
 	appConfig, err := internal.LoadConfig(configFile)
 	if err != nil {
-		msg := fmt.Sprintf("Unable to load config, error: %s", err)
-		log.Println(msg)
-		alert.SendEmail(appConfig.Alert, msg)
+		sendAlert(fmt.Sprintf("Unable to load config, error: %s", err))
 		return nil
 	}
 
@@ -37,9 +37,7 @@ func Run(configFile string) error {
 	}
 
 	if err != nil {
-		msg := fmt.Sprintf("Unable to initialize %s source, error: %s", appConfig.Source.Type, err)
-		log.Println(msg)
-		alert.SendEmail(appConfig.Alert, msg)
+		sendAlert(fmt.Sprintf("Unable to initialize %s source, error: %s", appConfig.Source.Type, err))
 		return nil
 	}
 
@@ -53,9 +51,7 @@ func Run(configFile string) error {
 	}
 
 	if err != nil {
-		msg := fmt.Sprintf("Unable to initialize %s destination, error: %s", appConfig.Destination.Type, err)
-		log.Println(msg)
-		alert.SendEmail(appConfig.Alert, msg)
+		sendAlert(fmt.Sprintf("Unable to initialize %s destination, error: %s", appConfig.Destination.Type, err))
 		return nil
 	}
 
@@ -95,9 +91,14 @@ func Run(configFile string) error {
 	}
 
 	if len(errors) > 0 {
-		alert.SendEmail(appConfig.Alert, fmt.Sprintf("Sync error(s):\n%s", strings.Join(errors, "\n")))
+		sendAlert(fmt.Sprintf("Sync error(s):\n%s", strings.Join(errors, "\n")))
 	}
 
 	log.Printf("Archive completed at %s", time.Now().UTC().Format(time.RFC1123Z))
 	return nil
+}
+
+func sendAlert(msg string) {
+	log.Println(msg)
+	alert.SendEmail(appConfig.Alert, msg)
 }
