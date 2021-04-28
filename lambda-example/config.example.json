@@ -1,0 +1,47 @@
+{
+  "Runtime": {
+    "DryRunMode": false
+  },
+  "Source": {
+    "Type": "RestAPI",
+    "AdapterConfig": {
+      "Method": "GET",
+      "BaseURL": "https://example.com",
+      "AuthType": "basic",
+      "Username": "username",
+      "Password": "password",
+      "UserAgent": "rest-data-archiver"
+    }
+  },
+  "Destination": {
+    "Type": "S3",
+    "AdapterConfig": {
+      "BucketName": "my-archive-bucket",
+      "AwsConfig": {
+        "Region": "us-east-1",
+        "AccessKeyId": "your-access-key-id",
+        "SecretAccessKey": "secret-access-key"
+      }
+    }
+  },
+  "Alert": {
+    "AWSRegion": "us-east-1",
+    "CharSet": "UTF-8",
+    "ReturnToAddr": "no-reply@example.org",
+    "SubjectText": "rest-data-archiver alert",
+    "RecipientEmails":  ["admin@example.org"],
+    "AWSAccessKeyID": "ABCD1234",
+    "AWSSecretAccessKey": "abcd1234!@#$"
+  },
+  "Sets": [
+    {
+      "Name": "Users",
+      "Source": {
+        "Path": "/users"
+      },
+      "Destination": {
+        "ObjectNamePrefix": "users"
+      }
+    }
+  ]
+}
