@@ -95,7 +95,12 @@ func RunSet(logger *log.Logger, source Source, destination Destination, config A
 		logger.Println("Data saved to destination")
 	}
 
-	time.Sleep(time.Millisecond * 10)
+	for i := 0; i < 1000; i++ {
+		if len(eventLog) == 0 {
+			break
+		}
+		time.Sleep(time.Millisecond)
+	}
 	close(eventLog)
 
 	return nil
