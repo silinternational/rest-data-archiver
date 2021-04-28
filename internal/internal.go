@@ -116,7 +116,11 @@ func processEventLog(logger *log.Logger, config alert.Config, eventLog <-chan Ev
 }
 
 func printSourceResponse(logger *log.Logger, response []byte) {
-	logger.Printf("response:\n%s\n", response)
+	if len(response) > 500 {
+		logger.Printf("response:\n%s...(truncated)", response[0:500])
+	} else {
+		logger.Printf("response:\n%s\n", response)
+	}
 }
 
 type EmptyDestination struct{}
