@@ -1,14 +1,15 @@
 # For full config options, check the docs:
 #    docs.serverless.com
 
-service: rda
+service: rest-data-archiver
 
 provider:
   name: aws
   runtime: go1.x
-  timeout: 240
+  timeout: 900
   versionFunctions: false
   memorySize: 128
+  logRetentionInDays: 14
 
   # you can overwrite defaults here
   #  stage: dev
