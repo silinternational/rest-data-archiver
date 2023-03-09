@@ -90,9 +90,10 @@ func (r *RestAPI) ForSet(setName string, syncSetJson json.RawMessage) error {
 
 func (r *RestAPI) Read() ([]byte, error) {
 	headers := map[string]string{"Content-Type": "application/json"}
-	request, err := r.httpRequest(r.RequestMethod, r.BaseURL+r.setConfig.Path, "", headers)
+	url := r.BaseURL + r.setConfig.Path
+	request, err := r.httpRequest(r.RequestMethod, url, "", headers)
 	if err != nil {
-		return nil, fmt.Errorf("restAPI Read failed with http error: %s", err)
+		return nil, fmt.Errorf("restAPI Read failed with http error: %s, %s, url: %s", err, request, url)
 	}
 	return request, nil
 }
